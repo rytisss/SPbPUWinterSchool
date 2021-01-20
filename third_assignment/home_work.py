@@ -37,8 +37,8 @@ def analyze():
 
     # Try to predict 'healthy life expectancy' for following parameters:
     # Positive affect, Negative affect, Social support, Freedom,	Corruption,	Generosity,	Log of GDP per capita
-    x = df_norm.drop(['Ladder', 'SD of Ladder', 'Healthy life\nexpectancy'], axis=1)
-    y = df_norm['Healthy life\nexpectancy']
+    x = df_norm.drop(['Ladder', 'SD of Ladder', 'Healthy life\r\nexpectancy'], axis=1)
+    y = df_norm['Healthy life\r\nexpectancy']
 
     # data split train 70% - 30%
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, shuffle=True)
