@@ -10,10 +10,10 @@
  You will find your dataset inside the rar file named as "pulsar_stars.csv"
  
  Tested algorithm and accuracy results:\
-1 place: Catboost______________________ 0.9825698324022346\
-2 place: Random forest classifier______ 0.9818994413407821\
-3 place: SVC_with_kernel_poly__________ 0.9803351955307262\
-4 place: k-nearest neighbors___________ 0.9801117318435755\
-5 place: SVC_with_kernel_rbf___________ 0.9794413407821229\
-6 place: SVC_with_kernel_linear________ 0.9749720670391061\
-7 place: Decision trees classifier_____ 0.9691620111731843\
+1 place: Catboost______________________0.9825698324022346
+2 place: Random forest classifier______0.9816759776536312
+3 place: SVC_with_kernel_poly__________0.9803351955307262
+4 place: k-nearest neighbors___________0.9801117318435755
+5 place: SVC_with_kernel_rbf___________0.9794413407821229
+6 place: SVC_with_kernel_linear________0.9749720670391061
+7 place: Decision trees classifier_____0.9669273743016760
