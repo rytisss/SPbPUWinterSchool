@@ -9,10 +9,10 @@
  To learn more about pulsars
  You will find your dataset inside the rar file named as "pulsar_stars.csv"
  
- Tested algorithm and accuracy results:\
-1 place: **0.9825698324022346 Catboost**                       
-2 place: **0.9821229050279330 Random forest classifier**        
-3 place: **0.9803351955307262 SVC_with_kernel_poly**            
+ *Tested algorithm and accuracy results:*\
+**1 place: 0.9825698324022346 Catboost**                       
+**2 place: 0.9821229050279330 Random forest classifier**        
+**3 place: 0.9803351955307262 SVC_with_kernel_poly**            
 4 place: 0.9801117318435755 k-nearest neighbors             
 5 place: 0.9794413407821229 SVC_with_kernel_rbf             
 6 place: 0.9749720670391061 SVC_with_kernel_linear          
