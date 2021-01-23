@@ -1,4 +1,4 @@
-#HOMEWORK- 1 
+#HOMEWORK
 
  You are hired by NASA as a Data Scientist, Congratulations!  
  Your first project:  you have to classify stars based on their astornomical measurements,  0 non-pulsar, 1-pulsar  
