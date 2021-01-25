@@ -9,20 +9,21 @@ from tensorflow.python.keras.callbacks import ModelCheckpoint
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 
 
-def create_efficientNetB0_model(input_size=(224, 224, 3), weigths_path=None):
+def create_MobileNetV3Small_model(input_size=(224, 224, 3), weigths_path=None):
+    base = tf.keras.applications.MobileNetV3Small(include_top=False,
+                                           weights='imagenet',
+                                           input_shape=input_size)
+    base.trainable = True
     model = tf.keras.Sequential([
-        tf.keras.applications.EfficientNetB0(include_top=False,
-                                             weights='imagenet',
-                                             input_shape=input_size),
+        base,
         GlobalAveragePooling2D(),
         Dense(128, activation='relu'),
-        Dense(32, activation='relu'),
         Dense(8, activation='relu'),
-        Dense(2, activation='relu'),
         Dense(1, activation='sigmoid')
     ])
+
     tf.keras.utils.plot_model(model, to_file='model.png', show_shapes=True)
-    model.compile(loss='binary_crossentropy',
+    model.compile(loss=tf.keras.losses.BinaryCrossentropy(),
                   optimizer=Adam(lr=1e-3),
                   metrics=['binary_accuracy'])
 
@@ -43,12 +44,12 @@ def train():
     tf.keras.backend.clear_session()
 
     batch_size = 16
-    epoch_number = 5
+    epoch_number = 10
     image_size = (224, 224)
 
-    model = create_efficientNetB0_model()
+    model = create_MobileNetV3Small_model()
 
-    image_dir = r'C:\Users\Rytis\Desktop\SPbPUWinterSchool\final_project\prepared_data/'
+    image_dir = r'C:\Users\Rytis\Desktop\SPbPUWinterSchool\final_project\prepared_data_inside_boarders'
 
     image_generator = ImageDataGenerator(rescale=1./255., validation_split=0.2)
 
@@ -56,17 +57,20 @@ def train():
                                                         directory=image_dir,
                                                         shuffle=True,
                                                         target_size=image_size,
-                                                        subset="training",
+                                                        subset='training',
                                                         class_mode='binary')
-
+    test_output = r'C:\Users\Rytis\Desktop\SPbPUWinterSchool\final_project\test_output/'
     test_generator = image_generator.flow_from_directory(batch_size=batch_size,
                                                              directory=image_dir,
                                                              shuffle=True,
                                                              target_size=image_size,
-                                                             subset="validation",
-                                                             class_mode='binary')
+                                                             subset='validation',
+                                                             class_mode='binary',
+                                                            save_to_dir=test_output,
+                                                            save_prefix='N',
+                                                            save_format='jpeg')
 
-    output_dir = r'C:\Users\Rytis\Desktop\SPbPUWinterSchool\final_project\weights_output/'
+    output_dir = r'C:\Users\Rytis\Desktop\SPbPUWinterSchool\final_project\weights_output_inside_boarders/'
     outputPath = output_dir + "Doggo_or_catto-{epoch:03d}-{loss:.4f}.hdf5"
 
     # Learning rate scheduler
