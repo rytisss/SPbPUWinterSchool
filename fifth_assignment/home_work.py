@@ -2,19 +2,17 @@ import operator
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from catboost import CatBoostClassifier
 from xgboost import XGBClassifier
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from tensorflow import keras
 
 
 def train_models():
     # Read dataset
-    happiness_dataset_path = 'dataset/covtype.data'
-    df = pd.read_csv(happiness_dataset_path)
+    convtype_dataset_path = 'dataset/covtype.data'
+    df = pd.read_csv(convtype_dataset_path)
     print(df)
 
     # Print sum of Nan values in each column
@@ -26,6 +24,7 @@ def train_models():
     # drop target class
     df_norm = df.drop(['5'], axis=1)
 
+
     # Normalize dataset
     # create a scaler object
     scaler = MinMaxScaler()
@@ -35,19 +34,22 @@ def train_models():
 
     # make inputs and outputs
     x = df_norm
-    y = df['5']
+    y = df['5'] # output class column
 
     # data split train 75% - 25%
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, shuffle=True, random_state=555)
     print('Entries in train: ' + str(x_train.shape[0]))
     print('Entries in test: ' + str(x_test.shape[0]))
 
+    # make categorical output
+    #y_train = keras.utils.to_categorical(y_train)
+    #y_test = keras.utils.to_categorical(y_test)
+
     # collect each classifier results to dictionary for the best classifier selection
     classifiers_results = {}
     print('\n')
     print('Lets begin training and testing!!!')
     print(2 * '\n')
-
 
     print('Random forest classifier')
     # random forest
@@ -67,7 +69,7 @@ def train_models():
     print('XGBClassifier classifier')
     # xgbClassifier
     print('Training...')
-    xgboost = XGBClassifier()
+    xgboost = XGBClassifier(objective='multi:softmax', use_label_encoder=True)
     xgboost.fit(x_train, y_train)
     print('Training done!')
     print('Testing!')
