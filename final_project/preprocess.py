@@ -21,11 +21,7 @@ def get_file_name(path):
 
 def resize_and_extrapolate_image_boarders(image, destination_width, destination_height):
     """
-    # make blank image
-    destination_image = np.zeros([destination_height, destination_width, 3], dtype=np.uint8)
-    # center 'imageROI' to destination image center
-    center_x = destination_width // 2
-    center_y = destination_height // 2
+    resize to fit image and make boarders
     """
     # resize 'imageROI' to fit into destination image, also keep the aspect ratio
     roi_height, roi_width = image.shape[:2]
