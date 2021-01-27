@@ -2,8 +2,9 @@ import tensorflow as tf
 
 physical_devices = tf.config.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(physical_devices[0], True)
-from tensorflow.python.keras.callbacks import ModelCheckpoint
-from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
+
+from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 from .model import create_MobileNetV3Small_model
 
@@ -27,24 +28,24 @@ def train():
 
     image_dir = r'C:\Users\Rytis\Desktop\SPbPUWinterSchool\final_project\prepared_data_inside_boarders'
 
-    image_generator = ImageDataGenerator(rescale=1./255., validation_split=0.2)
+    image_generator = ImageDataGenerator(rescale=1. / 255., validation_split=0.2)
 
     train_generator = image_generator.flow_from_directory(batch_size=batch_size,
-                                                        directory=image_dir,
-                                                        shuffle=True,
-                                                        target_size=image_size,
-                                                        subset='training',
-                                                        class_mode='binary')
+                                                          directory=image_dir,
+                                                          shuffle=True,
+                                                          target_size=image_size,
+                                                          subset='training',
+                                                          class_mode='binary')
     test_output = r'C:\Users\Rytis\Desktop\SPbPUWinterSchool\final_project\test_output/'
     test_generator = image_generator.flow_from_directory(batch_size=batch_size,
-                                                             directory=image_dir,
-                                                             shuffle=True,
-                                                             target_size=image_size,
-                                                             subset='validation',
-                                                             class_mode='binary',
-                                                            save_to_dir=test_output,
-                                                            save_prefix='N',
-                                                            save_format='jpeg')
+                                                         directory=image_dir,
+                                                         shuffle=True,
+                                                         target_size=image_size,
+                                                         subset='validation',
+                                                         class_mode='binary',
+                                                         save_to_dir=test_output,
+                                                         save_prefix='N',
+                                                         save_format='jpeg')
 
     output_dir = r'C:\Users\Rytis\Desktop\SPbPUWinterSchool\final_project\weights_output_inside_boarders/'
     outputPath = output_dir + "Doggo_or_catto-{epoch:03d}-{loss:.4f}.hdf5"

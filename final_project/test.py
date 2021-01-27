@@ -1,17 +1,7 @@
 from final_project.model import create_MobileNetV3Small_model, preprocess_image
-from final_project.preprocess import insertROI2BlackImage
-import glob
+from final_project.preprocess import resize_and_extrapolate_image_boarders, gather_image_from_dir
 import cv2
 import tensorflow as tf
-
-
-def gather_image_from_dir(input_dir):
-    image_extensions = ['*.bmp', '*.jpg', '*.png']
-    image_list = []
-    for image_extension in image_extensions:
-        image_list.extend(glob.glob(input_dir + image_extension))
-    image_list.sort()
-    return image_list
 
 
 def main():
@@ -25,7 +15,7 @@ def main():
     image_paths = gather_image_from_dir(test_image_dir)
     for image_path in image_paths:
         image = cv2.imread(image_path)
-        image = insertROI2BlackImage(image, input_size[0], input_size[0])
+        image = resize_and_extrapolate_image_boarders(image, input_size[0], input_size[0])
         image_rb_invert = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image_rb_invert = preprocess_image(image_rb_invert)
         prediction = model.predict(image_rb_invert)
