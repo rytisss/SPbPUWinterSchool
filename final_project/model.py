@@ -5,21 +5,20 @@ tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 from tensorflow.keras.layers import *
 from tensorflow.keras.optimizers import *
-import cv2
 import numpy as np
 
+
 def preprocess_image(image):
-    """Cast to greyscale and resize to desired size"""
     # normalize image and make 'tensor-like'
-    grey_image_norm = image / 255
-    grey_image_norm = np.reshape(grey_image_norm, grey_image_norm.shape + (1,))
-    grey_image_norm = np.reshape(grey_image_norm, (1,) + grey_image_norm.shape)
-    return grey_image_norm
+    norm_image = image / 255
+    norm_image_norm = np.reshape(norm_image, (1,) + norm_image.shape)
+    return norm_image_norm
+
 
 def create_MobileNetV3Small_model(input_size=(224, 224, 3), weigths_path=None):
     base = tf.keras.applications.MobileNetV3Small(include_top=False,
-                                           weights='imagenet',
-                                           input_shape=input_size)
+                                                  weights='imagenet',
+                                                  input_shape=input_size)
     base.trainable = True
     model = tf.keras.Sequential([
         base,
