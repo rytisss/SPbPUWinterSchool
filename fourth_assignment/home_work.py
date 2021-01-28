@@ -137,10 +137,11 @@ def train_models():
     classifiers_results.update({name: accuracy})
 
 
+
     print('Check the results')
     sorted_classifiers_results = dict(sorted(classifiers_results.items(), key=operator.itemgetter(1), reverse=True))
     for i, (name, accuracy) in enumerate(sorted_classifiers_results.items()):
-        print(str(i + 1) + ' place: ' + name.ljust(30, ' ') + ' ' + str(accuracy))
+        print(str(i + 1) + ' place: ' + str(accuracy) + ' '+ name.ljust(30, ' '))
 
 
 def main():
