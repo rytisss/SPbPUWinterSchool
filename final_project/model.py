@@ -20,6 +20,7 @@ def create_MobileNetV3Small_model(input_size=(224, 224, 3), weigths_path=None):
                                                   weights='imagenet',
                                                   input_shape=input_size)
     base.trainable = True
+    tf.keras.utils.plot_model(base, to_file='base.png', show_shapes=True)
     model = tf.keras.Sequential([
         base,
         GlobalAveragePooling2D(),
@@ -32,7 +33,7 @@ def create_MobileNetV3Small_model(input_size=(224, 224, 3), weigths_path=None):
     model.compile(loss=tf.keras.losses.BinaryCrossentropy(),
                   optimizer=Adam(lr=1e-3),
                   metrics=['binary_accuracy'])
-
+    model.summary()
     if weigths_path != None:
         model.load_weights(weigths_path)
     return model
